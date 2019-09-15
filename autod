@@ -1,0 +1,6 @@
+#!/bin/bash
+addrs="$(sudo fdisk -l | grep dev/sd | tail -n 1 | grep /dev/sd | head -c 10)"
+exec lxterminal -e sudo mount $addrs /usb  &
+exec lxterminal -e ranger /usb
+#echo $addrs
+
