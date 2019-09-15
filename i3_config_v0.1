@@ -1,0 +1,163 @@
+# set modifier
+set $super Mod4
+set $alt Mod1
+set $spa space
+set $ctrl ctrl
+# set font
+font pango: Noto Sans 9
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+#autostart
+exec  --no-startup-id setxkbmap -layout 'us,ru' -option 'grp:alt_shift_toggle,grp_led:scroll'
+#exec --no-startup-id feh --bg-scale ~/.wallpaper.png
+#exec --no-startup-id xsettingsd &
+#exec --no-startup-id compton -b
+#exec --no-startup-id nm-applet &
+#exec --no-startup-id conky -c ~/.config/conky/conky-i3.conf &
+exec --no-startup-id dunst 
+exec --no-startup-id nitrogen  --restore &
+# start a terminal
+#exec sh /home/ablive/autorun/scripts/sxkb.sh
+bindsym ctrl+Return exec i3-sensible-terminal
+
+# start dmenu (a program launcher)
+bindsym $super+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=8'"
+
+# Rofi maybe not
+bindsym ctrl+d exec rofi -lines 12 -padding 18 -width 60 -location 0 -show drun -sidebar-mode -columns 3 -font 'Noto Sans 8'
+
+#custom keys
+bindsym Print exec cd Pictures/ && scrot 'Cheese_%a-%d%b%y_%H.%M.png'
+bindsym $super+l exec i3lock -i ~/.wallpaper.png
+bindsym $super+Shift+w exec firefox
+bindsym $super+Shift+f exec thunar;workspace 3;focus
+bindsym $super+Shift+g exec geany
+bindsym Mod1+x exec playerctl  play-pause
+bindsym Mod1+c exec playerctl  next
+bindsym Mod1+v exec playerctl  previous
+bindsym ctrl+Shift+Return  exec lxterminal -e  ranger
+bindsym ctrl+Shift+F12 exec autod
+bindsym ctrl+space exec surf www.google.com 
+#bindsym $spa+ exec surf
+
+#change volume
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioMute exec amixer set Master toggle
+bindsym Mod1+n exec amixer -q set Master 5%+
+bindsym Mod1+m exec amixer -q set Master 5%-
+
+# kill focused window
+bindsym $super+c kill
+bindsym $alt+F4 kill
+
+# change focus
+bindsym $super+Left focus left
+bindsym $super+Down focus down
+bindsym $super+Up focus up
+bindsym $super+Right focus right
+
+# move focused window
+bindsym ctrl+Shift+Left move left
+bindsym ctrl+Shift+Down move down
+bindsym ctrl+Shift+Up move up
+bindsym ctrl+Shift+Right move right
+
+bindsym ctrl+Shift+y layout tabbed
+# split in horizontal orientation
+bindsym ctrl+Shift+h split h
+
+# split in vertical orientation
+bindsym $super+v split v
+
+# enter fullscreen mode for the focused container
+bindsym ctrl+Shift+f fullscreen toggle
+
+# change container layout split
+bindsym $super+s layout toggle split
+
+# toggle tiling / floating
+bindsym $super+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+Shift+space focus mode_toggle
+
+# switch to workspace
+bindsym $alt+Control+Right workspace next
+bindsym $alt+Control+Left workspace prev
+bindsym ctrl+1 workspace α
+bindsym ctrl+2 workspace β
+bindsym ctrl+3 workspace γ
+bindsym ctrl+4 workspace ω
+bindsym ctrl+5 workspace φ
+bindsym ctrl+6 workspace ψ
+bindsym ctrl+7 workspace λ
+bindsym ctrl+8 workspace μ
+bindsym ctrl+9 workspace ξ
+bindsym ctrl+0 workspace δ
+
+# move focused container to workspace
+bindsym ctrl+Shift+1 move container to workspace 1
+bindsym ctrl+Shift+2 move container to workspace 2
+bindsym ctrl+Shift+3 move container to workspace 3
+bindsym ctrl+Shift+4 move container to workspace 4
+bindsym ctrl+Shift+5 move container to workspace 5
+bindsym ctrl+Shift+6 move container to workspace 6
+bindsym ctrl+Shift+7 move container to workspace 7
+bindsym ctrl+Shift+8 move container to workspace 8
+bindsym ctrl+Shift+9 move container to workspace 9
+bindsym ctrl+Shift+0 move container to workspace 10
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym ctrl+Shift+r restart
+
+# exit i3
+bindsym $super+q exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym Left resize shrink width 20 px or 20 ppt
+        bindsym Down resize grow height 20 px or 20 ppt
+        bindsym Up resize shrink height 20 px or 20 ppt
+        bindsym Right resize grow width 20 px or 20 ppt
+        bindsym Return mode "default"
+}
+bindsym ctrl+Mod1+r mode "resize"
+
+# panel
+bar {
+position top
+        colors {
+        background #000000
+        statusline #000000
+    
+        separator #CD00CD
+
+        # colour of border, background, and text
+        focused_workspace       #2f343f #ffffff #000000
+        active_workspace        #000000 #000000 #d8dee
+        inactive_workspace      #2f343f #2f343f #d8dee8
+        urgent_workspacei       #2f343f #ebcb8b #2f343f
+    }
+        status_command i3status
+}
+
+# window rules, you can find the window class using xprop
+for_window [class=".*"] border pixel 0
+#assign [class=URxvt] 1
+#assign [class=Firefox] 2
+#assign [class=Pcmanfm] 3
+#assign [class=Lxappearance|GParted] 6
+#for_window [class=feh|Lxappearance] floating enable
+#for_window [class=Firefox|Lxappearance] focus
+#for_window [class=GParted] focus
+
+# colour of border, background, text, indicator, and child_border
+client.focused              #ffffff #ffffff #000000 #000000 #000000
+client.focused_inactive     #ffffff #000000 #ffffff #2f343f #2f343f
+client.unfocused            #ffffff #000000 #ffffff #2f343f #2f343f
+client.urgent               #ffffff #000000 #ffffff #2f343f #2f343f
+client.placeholder          #ffffff #000000 #ffffff #2f343f #2f343f
+client.background           #2f343f
